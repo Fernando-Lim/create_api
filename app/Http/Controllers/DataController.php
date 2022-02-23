@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class DataController extends Controller
 {
@@ -18,7 +19,9 @@ class DataController extends Controller
             'name_pc' => 'required',
             'timestamp' => 'required',
         ]);
-        if($request->password == 'argon2id'){
+
+        
+        if(Hash::check($request->password, '$2a$12$MI2vIRn8R5OzupCrqPfvBu9uG/KrMuJKOr./OdXrtlK/LlxHX5o56')){
             if($validator->fails()){
                 return response()->json($validator->errors()->toJson(), 400);
             }
